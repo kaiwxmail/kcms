@@ -1,5 +1,5 @@
-*.php linguist-language=Java 
-*.html linguist-language=Java 
-*.js linguist-language=Java 
-*.xml linguist-language=Java
-*.css linguist-language=Java 
+*.php linguist-language=PHP
+*.html linguist-language=PHP
+*.js linguist-language=PHP
+*.xml linguist-language=PHP
+*.css linguist-language=PHP
