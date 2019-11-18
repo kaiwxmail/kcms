@@ -500,7 +500,9 @@ function getNews() {
         foreach ($_array as $val) {
             $newsStr[] = trim($val[2]);
         }
-        file_put_contents($fileList, implode(PHP_EOL, array_flip(array_flip($newsStr))), LOCK_EX);
+        if(!empty($newsStr[0])){
+            file_put_contents($fileList, implode(PHP_EOL, array_flip(array_flip($newsStr))), LOCK_EX);
+        }
         return '本次共采集: '.count($newsStr).' 条';
     } else {
         return '采集任务完毕';
