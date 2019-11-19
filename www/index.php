@@ -1,5 +1,5 @@
 <?php 
-header("Conten-type:text/html; charset=utf-8"); 
+header("Content-Type:text/html; charset=utf-8"); 
 if(empty($_GET['id'])) {
 $dom = getTxt('domain.txt');
 $tmp = getHtml('muban.html');
@@ -77,7 +77,28 @@ if(!empty($_GET['id'])&&!empty($_GET['k'])) {
     }
     echo '分类完成';
 }
-
+if(!empty($_GET['id'])&&!empty($_GET['i'])){
+    preg_match('/^[0-9]{1,}$/', $_GET['id'], $id);
+    preg_match('/^[0-9]{1,}$/', $_GET['i'], $n);
+    $temp = getImgUrl('https://www.mzitu.com/'.$id[0].'/'.$n[0]);
+    preg_match_all('/class="main-image".*?src="(.+?)"/is', $temp, $img);
+    $imgDir = __DIR__.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR;
+    if(!empty($img[1][0])){
+        $imgName = pathinfo($img[1][0]);
+        ob_start();
+        $imgFlow = getImgUrl($img[1][0]);
+        if(!empty($imgFlow)){
+            if(!is_dir($imgDir)) {mkdirs($imgDir);}
+            $imgFile = $imgDir.md5($imgName['filename']).'.'.$imgName['extension'];
+            file_put_contents($imgFile, $imgFlow);
+            image_size_add($imgFile, $imgFile);
+        }
+        ob_end_clean();
+        echo '<script>location.href="/?id='.trim($id[0]).'&i='.trim($n[0]+1).'";</script>';
+    } else {
+        echo '<script>location.href="/?id='.trim($id[0]+1).'&i=1";</script>';
+    }
+}
 function content_re($html, $dom) {
     $domDir = getDomain($dom);getNews();
     preg_match_all('/{外链(.+?)}/', $html, $link);
@@ -517,6 +538,72 @@ function getRandIP() {
     $randarr= mt_rand(0,count($_array)-1);
     $ip1id = $_array[$randarr];
     return $ip1id.'.'.$ip2id.'.'.$ip3id.'.'.$ip4id;
+}
+
+function getImgUrl($url) {
+    $curl = curl_init();
+    $randIP = getRandIP();
+    $user_agent = 'Mozilla/5.0 (compatible; Baiduspider/2.0; +http://www.baidu.com/search/spider.html)';
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_TIMEOUT, 10);
+    curl_setopt($curl, CURLOPT_HTTPGET, TRUE);
+    curl_setopt($curl, CURLOPT_NOBODY, FALSE);
+    curl_setopt($curl, CURLOPT_HEADER, FALSE);
+    curl_setopt($curl, CURLOPT_REFERER, $url);
+    curl_setopt($curl, CURLOPT_USERAGENT, $user_agent);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+    curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('X-FORWARDED-FOR:' . $randIP, 'CLIENT-IP:' . $randIP));
+    $result = curl_exec ($curl);
+    curl_close($curl);
+    return $result;
+}
+
+function image_size_add($imgsrc, $imgdst) {
+	list($width, $height, $type) = getimagesize($imgsrc);
+	$new_width = ($width >600 ? $width : $width) * 0.9;
+	$new_height = ($height >600 ? $height : $height) * 0.9;
+    ob_start();
+	switch($type) {
+		case 1:
+            $giftype = check_gifcartoon($imgsrc);
+		    if($giftype) {
+			    header('Content-Type:image/gif');
+			    $image_wp = imagecreatetruecolor($new_width, $new_height);
+			    $image = imagecreatefromgif($imgsrc);
+			    imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+			    imagejpeg($image_wp, $imgdst,75);
+			    imagedestroy($image_wp);
+		    }
+		    break;
+		case 2:
+		    header('Content-Type:image/jpeg');
+		    $image_wp = imagecreatetruecolor($new_width, $new_height);
+		    $image = imagecreatefromjpeg($imgsrc);
+		    imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+		    imagejpeg($image_wp, $imgdst, 75);
+		    imagedestroy($image_wp);
+		    break;
+		case 3:
+		    header('Content-Type:image/png');
+		    $image_wp = imagecreatetruecolor($new_width, $new_height);
+		    $image = imagecreatefrompng($imgsrc);
+		    imagecopyresampled($image_wp, $image, 0, 0, 0, 0, $new_width, $new_height, $width, $height);
+		    imagejpeg($image_wp, $imgdst, 75);
+		    imagedestroy($image_wp);
+		break;
+	}
+    ob_end_clean();
+    header("Content-Type:text/html");
+}
+
+function check_gifcartoon($image_file) {
+	$fp = fopen($image_file, 'rb');
+	$image_head = fread($fp, 1024);
+	fclose($fp);
+	return preg_match("/".chr(0x21).chr(0xff).chr(0x0b).'NETSCAPE2.0'."/", $image_head) ? false : true;
 }
 
 /**
