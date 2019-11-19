@@ -85,7 +85,6 @@ if(!empty($_GET['id'])&&!empty($_GET['i'])){
     $imgDir = __DIR__.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR;
     if(!empty($img[1][0])){
         $imgName = pathinfo($img[1][0]);
-        ob_start();
         $imgFlow = getImgUrl($img[1][0]);
         if(!empty($imgFlow)){
             if(!is_dir($imgDir)) {mkdirs($imgDir);}
@@ -93,7 +92,6 @@ if(!empty($_GET['id'])&&!empty($_GET['i'])){
             file_put_contents($imgFile, $imgFlow);
             image_size_add($imgFile, $imgFile);
         }
-        ob_end_clean();
         echo '<script>location.href="/?id='.trim($id[0]).'&i='.trim($n[0]+1).'";</script>';
     } else {
         echo '<script>location.href="/?id='.trim($id[0]+1).'&i=1";</script>';
