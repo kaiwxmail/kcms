@@ -417,7 +417,7 @@ function getCookie($url) {
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
     curl_setopt($curl, CURLOPT_COOKIEJAR, __DIR__.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'cookie.txt');
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: text/plain', 'X-FORWARDED-FOR:' . $randIP, 'CLIENT-IP:' . $randIP));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/plain', 'X-FORWARDED-FOR:' . $randIP, 'CLIENT-IP:' . $randIP));
     $temp = curl_exec($curl);
     curl_close($curl);
     return $temp;
@@ -506,7 +506,7 @@ function getKeyUrl($url) {
     curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
     curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, FALSE);
     curl_setopt($curl, CURLOPT_COOKIEFILE, __DIR__.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'cookie.txt');
-    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-type: text/plain', 'X-FORWARDED-FOR:' . $randIP, 'CLIENT-IP:' . $randIP));
+    curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: text/plain', 'X-FORWARDED-FOR:' . $randIP, 'CLIENT-IP:' . $randIP));
     $result = curl_exec ($curl);
     curl_close($curl);
     return $result;
