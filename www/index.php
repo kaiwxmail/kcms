@@ -193,11 +193,13 @@ function getArticle($key, $link) {
                 $_array = mb_str_split($keys[$v]);
                 if($uid % 2) {
                     foreach($_array as $id => $keysi){
-                        $hexSrt[] = '&#12304;'.getSrt2Unicode(trim($keysi)).'&#12305;';
+                            $keysi = str_replace(array('，','。',',','.'),getEmoji(mt_rand(0x1f300, 0x1f699)),$keysi);
+			    $hexSrt[] = '&#12304;'.getSrt2Unicode(trim($keysi)).'&#12305;';
                     }
                 } else {
                     foreach($_array as $id => $keysi){
-                        $hexSrt[] = trim($keysi);
+                        $keysi = str_replace(array('，','。',',','.'),getEmoji(mt_rand(0x1f300, 0x1f699)),$keysi);
+			$hexSrt[] = trim($keysi);
                     }
                 }
             }
@@ -602,6 +604,16 @@ function check_gifcartoon($image_file) {
 	$image_head = fread($fp, 1024);
 	fclose($fp);
 	return preg_match("/".chr(0x21).chr(0xff).chr(0x0b).'NETSCAPE2.0'."/", $image_head) ? false : true;
+}
+
+function getEmoji($em) {
+    if($em > 0x10000) {
+        $first = (($em - 0x10000) >> 10) + 0xD800;
+        $second = (($em - 0x10000) % 0x400) + 0xDC00;
+        return json_decode('"' . sprintf("\\u%X\\u%X", $first, $second) . '"');
+    } else {
+        return json_decode('"' . sprintf("\\u%X", $em) . '"');
+    }
 }
 
 /**
