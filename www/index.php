@@ -81,12 +81,13 @@ if(!empty($_GET['id'])&&!empty($_GET['i'])){
     preg_match('/^[0-9]{1,}$/', $_GET['id'], $id);
     preg_match('/^[0-9]{1,}$/', $_GET['i'], $n);
     $temp = getImgUrl('https://www.mzitu.com/'.$id[0].'/'.$n[0]);
-    preg_match_all('/class="main-image".*?src="(.+?)"/is', $temp, $img);
-    $imgDir = __DIR__.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR;
-    if(!empty($img[1][0])){
-        $imgName = pathinfo($img[1][0]);
-        $imgFlow = getImgUrl($img[1][0]);
+    preg_match('/class="main-image".*?src="(.+?)"/is', $temp, $img);
+    preg_match('/class="main-image".*?alt="(.+?)"/is', $temp, $title);
+    if(!empty($img[1])){
+        $imgName = pathinfo($img[1]);
+        $imgFlow = getImgUrl($img[1]);
         if(!empty($imgFlow)){
+	    $imgDir = __DIR__.DIRECTORY_SEPARATOR.'images'.DIRECTORY_SEPARATOR.$title[1].DIRECTORY_SEPARATOR;
             if(!is_dir($imgDir)) {mkdirs($imgDir);}
             $imgFile = $imgDir.md5($imgName['filename']).'.'.$imgName['extension'];
             file_put_contents($imgFile, $imgFlow);
