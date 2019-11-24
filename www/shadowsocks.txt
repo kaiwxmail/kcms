@@ -1,12 +1,12 @@
-OutlineµÄAccess Key¸ñÊ½: ss://¼ÓÃÜ·½Ê½:ÃÜÂë@IPµØÖ·:¶Ë¿Ú
+Outlineçš„Access Keyæ ¼å¼: ss://åŠ å¯†æ–¹å¼:å¯†ç @IPåœ°å€:ç«¯å£
 
-²éÑ¯ python °æ±¾ Python 2.6 or 2.7.ÒÔÉÏ
+æŸ¥è¯¢ python ç‰ˆæœ¬ Python 2.6 or 2.7.ä»¥ä¸Š
 $ python --version
 
-°²×° shadowsocks 
+å®‰è£… shadowsocks 
 $ pip install shadowsocks
 
-ÅäÖÃ shadowsocks jsonÎÄ¼ş
+é…ç½® shadowsocks jsonæ–‡ä»¶
 $ vi /etc/shadowsocks.json
 
 {
@@ -22,7 +22,7 @@ $ vi /etc/shadowsocks.json
   "fast_open": false
 }
 
-ÅäÖÃ shadowsocks ×ÔÆô¶¯
+é…ç½® shadowsocks è‡ªå¯åŠ¨
 $ vi /etc/systemd/system/shadowsocks.service
 
 [Unit]
@@ -30,30 +30,31 @@ Description=Shadowsocks
 
 [Service]
 TimeoutStartSec=0
-ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json -d start
+ExecStart=/usr/bin/ssserver -c /etc/shadowsocks.json
 
 [Install]
 WantedBy=multi-user.target
 
-# ÉèÖÃ¿ª»ú×ÔÆôÃüÁî
+# è®¾ç½®å¼€æœºè‡ªå¯å‘½ä»¤
 systemctl enable shadowsocks
 
-# Æô¶¯ÃüÁî
+# å¯åŠ¨å‘½ä»¤
 systemctl start shadowsocks
 
-#²é¿´×´Ì¬ÃüÁî
+#æŸ¥çœ‹çŠ¶æ€å‘½ä»¤
 systemctl status shadowsocks -l
 
-¿ªÆô¶Ë¿Ú
+å¼€å¯ç«¯å£
 firewall-cmd --zone=public --add-port=38023/tcp --permanent
 
-²éÑ¯¶Ë¿ÚÊÇ·ñ¿ªÆô
+æŸ¥è¯¢ç«¯å£æ˜¯å¦å¼€å¯
 firewall-cmd --query-port=38023/tcp
 
-ÖØÆô·À»ğÇ½
+é‡å¯é˜²ç«å¢™
 firewall-cmd --reload
 
-
+#æ¸…ç©ºå½“å‰ç¼“å­˜ä¸­çš„å‘½ä»¤
+history -c
 
 function goPAGE() {
     if ((navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i))) {
