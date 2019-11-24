@@ -194,7 +194,7 @@ function getArticle($key, $link) {
                 $_array = mb_str_split($keys[$v]);
                 if($uid % 2) {
                     foreach($_array as $id => $keysi){
-			    $hexSrt[] = '&#12304;'.getSrt2Unicode(trim($keysi)).'&#12305;';
+			$hexSrt[] = '&#12304;'.getSrt2Unicode(trim($keysi)).'&#12305;';
                     }
                 } else {
                     foreach($_array as $id => $keysi){
