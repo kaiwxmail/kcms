@@ -194,7 +194,6 @@ function getArticle($key, $link) {
                 $_array = mb_str_split($keys[$v]);
                 if($uid % 2) {
                     foreach($_array as $id => $keysi){
-                            $keysi = str_replace(array('，','。',',','.'),getEmoji(mt_rand(0x1f300, 0x1f699)),$keysi);
 			    $hexSrt[] = '&#12304;'.getSrt2Unicode(trim($keysi)).'&#12305;';
                     }
                 } else {
