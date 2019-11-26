@@ -276,14 +276,16 @@ function getLinks($dom) {
         }
     } else {
         $fileList = str_replace('news'.DIRECTORY_SEPARATOR, '', $listIdDir).$id.'.title.json';
-        if(file_exists($fileList)&&(time()-filemtime($fileList)) < 60) {
-            return unserialize(file_get_contents($fileList));
-        } else {
-            $links = unserialize(file_get_contents($fileList));
-            $links['titles'] = $links['title'];
-            unset($links['links'],$links['title']);
-            return $links;
-        }
+        if(file_exists($fileList)) {
+            if((time()-filemtime($fileList)) < 60) {
+		return unserialize(file_get_contents($fileList));
+            } else {
+                $links = unserialize(file_get_contents($fileList));
+                $links['titles'] = $links['title'];
+                unset($links['links'],$links['title']);
+                return $links;
+            }
+	}
     }
     return array('time' => time()-mt_rand(120,600), 'list' => (empty($matchList[0]) ? 'news' : $matchList[0]), 'id' => $id, 'file' => $listIdDir);
 }
