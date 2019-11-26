@@ -171,7 +171,7 @@ function getTitle($dom, $link) {
             }
             $links['links'] = $json;
             $links['keyid'] = mt_rand(0,count($key)-1);
-            $links['title'] = implode($hexSrt);
+            $links['title'] = !empty($links['titles']) ? $links['titles'] : implode($hexSrt);
             file_put_contents(str_replace('news'.DIRECTORY_SEPARATOR, '', $links['file']).$links['id'].'.title.json', serialize($links), LOCK_EX);
         }
     }
@@ -278,6 +278,11 @@ function getLinks($dom) {
         $fileList = str_replace('news'.DIRECTORY_SEPARATOR, '', $listIdDir).$id.'.title.json';
         if(file_exists($fileList)&&(time()-filemtime($fileList)) < 60) {
             return unserialize(file_get_contents($fileList));
+        } else {
+            $links = unserialize(file_get_contents($fileList));
+            $links['titles'] = $links['title'];
+            unset($links['links'],$links['title']);
+            return $links;
         }
     }
     return array('time' => time()-mt_rand(120,600), 'list' => (empty($matchList[0]) ? 'news' : $matchList[0]), 'id' => $id, 'file' => $listIdDir);
