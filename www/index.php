@@ -10,18 +10,18 @@ $html = preg_replace('/{当前链接}/', empty($_GET)?'':''.trim($links['list'])
 $html = preg_replace('/{时间}/', trim(date("Y-m-d H:i:s",trim($links['time']))), $html);
 if(!empty($links['article'])){
     foreach($links['article'] as $k => $v){
-        $html = str_replace('{内容'.trim($v[0]).'}', '<p>'.trim($v[1]).'</p>', $html);
+        $html = str_replace('{内容'.trim($v[0]).'}', trim($v[1]), $html);
     }
 }
 if(!empty($links['links'])){
     foreach($links['links'] as $k => $v){
         $srtRand = getSrtRand(1, 6); // 随机字符 替换 固定字符$v[1]
-        $html = str_replace('{外链'.trim($v[0]).'}', '<a data-type="mip" href="/'.trim($links['list']).'/'.trim($v[2]).'.html" title="'.trim($v[3]).$srtRand.'" target="_blank">'.trim($v[3]).trim($srtRand).'</a>', $html);
+        $html = str_replace('{外链'.trim($v[0]).'}', '<a href="/'.trim($links['list']).'/'.trim($v[2]).'.html" title="'.trim($v[3]).$srtRand.'" target="_blank">'.trim($v[3]).trim($srtRand).'</a>', $html);
     }
 }
 if(!empty($links['image'])){
     foreach($links['image'] as $k => $v){
-        $html = str_replace('{随机图片'.trim($v[0]).'}', '<mip-img layout="responsive" width="350" height="263" src="'.trim($v[1]).'" alt="'.trim($links['title']).(trim($v[0])+1).'"></mip-img>', $html);
+        $html = str_replace('{随机图片'.trim($v[0]).'}', '<img layout="responsive" width="350" height="263" src="'.trim($v[1]).'" alt="'.trim($links['title']).(trim($v[0])+1).'">', $html);
     }
 }
 if(!empty($links['randsrt'])){
