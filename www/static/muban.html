@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
 <head>
+<meta charset="utf-8">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
 <link href="//{域名}/static/css/swiper.min.css" rel="stylesheet" type="text/css" />
 <link href="//{域名}/static/css/hover.css" rel="stylesheet" type="text/css" />
 <link href="//{域名}/static/css/z19_public.css" rel="stylesheet" type="text/css" />
@@ -11,6 +12,7 @@
 <link rel="stylesheet" type="text/css" href="//{域名}/static/css/z19_stylepad.css" media="screen and (min-width:768px) and (max-width:1023px)" />
 <link rel="stylesheet" type="text/css" href="//{域名}/static/css/z19_stylepad.css" media="screen and (min-device-width:768px) and (max-device-width:1023px)" />
 <link rel="stylesheet" type="text/css" href="//{域名}/static/css/z19_stylemobile.css" media="screen and (max-width:767px)" />
+<link rel="canonical" href="//{域名}/{当前链接}">
 <!--[if lt IE 9]>
 <script type="text/javascript" src="//{域名}/static/js/respond.min.js"></script>
 <![endif]-->
@@ -159,7 +161,7 @@
 	 
   </div>
   <!--m导航 end-->
-  
+
   <!--下拉菜单 begin-->
   <div class="nav_model" id="nav_model">
      <!--menu_box begin 组织机构-->
@@ -409,7 +411,7 @@
           </div>
      </div>
      <!--menu_box begin 成果转化-->
-     
+
      <!--menu_box begin 学部与院士-->
      <div class="model_box" style="padding-bottom:26px;">
         <!--model_l begin-->
@@ -511,7 +513,7 @@
        
      </div>
      <!--menu_box end 学部与院士-->
-     
+
      <!--menu_box begin 科学普及-->
      <div class="model_box" style="padding-bottom:20px;">
         <!--model_l begin-->
@@ -728,10 +730,8 @@
         <!--model_r begin-->
      </div>
      <!--menu_box end-->
-    <!--model_l end-->
-	  
-	  
-	  
+     <!--model_l end-->
+
      <!--menu_box begin-->
      <div class="model_box" style="padding-bottom:26px">
         <!--model_l begin-->
@@ -1002,15 +1002,16 @@ class="fontS">小</font>】</span>
 
 .TRS_Editor P{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor DIV{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor TD{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor TH{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor SPAN{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor FONT{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor UL{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor LI{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}.TRS_Editor A{margin-top:0px;margin-bottom:12px;line-height:1.8;font-family:宋体;font-size:10.5pt;}</style>
 <div>
-{内容1}
-{内容2}
-{随机图片1}
-{内容3}
-{随机图片2}
+<p>{内容1}</p>
+<p>{标题}{内容2}</p>
+<p>{随机图片1}</p>
+<p>{内容3}</p>
+<p>{随机图片2}</p>
+<p>{标题}{内容4}</p>
 </div>
 </div></div><!--文章正文-->
     </div>
-    <div id="_content" style="display:none;">{内容4}</div>
+    <div id="_content" style="display:none;">{标题}{内容2}{标题}{内容4}</div>
     <div class="xl_bottom">
        
         <div class="share bdsharebuttonbox bdshare-button-style0-32" style="zoom:1;" data-tag="share_1">
@@ -1289,5 +1290,21 @@ function checkform() {
 
 
 </script>
+
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
 </body>
 </html>
