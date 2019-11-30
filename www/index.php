@@ -4,10 +4,16 @@ if(empty($_GET['id'])) {
 $dom = getTxt('domain.txt');
 $tmp = getHtml('muban.html');
 $links = content_re($tmp, $dom);
-$html = preg_replace('/{域名}/', trim(getHost()), $tmp);
+$html = preg_replace('/{当前域名}/', trim(getHost()), $tmp);
 $html = preg_replace('/{标题}/', trim($links['title']), $html);
+$html = preg_replace('/{根域名}/', trim($links['domain']), $html);
 $html = preg_replace('/{当前链接}/', empty($_GET)?'':''.trim($links['list']).'/'.trim($links['id']).'.html', $html);
 $html = preg_replace('/{时间}/', trim(date("Y-m-d H:i:s",trim($links['time']))), $html);
+if(!empty($links['url'])){
+    foreach($links['url'] as $k => $v){
+        $html = str_replace('{内链'.trim($v[0]).'}', '<a href="//'.trim($v[1]).'.'.$links['domain'].'/" title="'.trim($v[2]).'">'.trim($v[2]).'</a>', $html);
+    }
+}
 if(!empty($links['article'])){
     foreach($links['article'] as $k => $v){
         $html = str_replace('{内容'.trim($v[0]).'}', trim($v[1]), $html);
@@ -102,6 +108,8 @@ function content_re($html, $dom) {
     $domDir = getDomain($dom);getNews();
     preg_match_all('/{外链(.+?)}/', $html, $link);
     $links = getTitle($domDir, $link);
+    preg_match_all('/{内链(.+?)}/', $html, $link);
+    $links = getDomUrl($link, $links);
     preg_match_all('/{随机图片(.+?)}/', $html, $image);
     $links = getImage($image, $links);
     preg_match_all('/{内容(.+?)}/', $html, $article);
@@ -284,6 +292,32 @@ function getLinks($dom) {
 	}
     }
     return array('domain' => $dom[2], 'time' => time()-mt_rand(120,600), 'list' => (empty($matchList[0]) ? 'news' : $matchList[0]), 'id' => $id, 'file' => $listIdDir);
+}
+
+function getDomUrl($key, $link) {
+    if(empty($link['url'])) {
+        if(!empty($key[1])){
+            $tit = getTxt('title.txt');
+            $rand_title = (!empty($tit)?array_rand($tit, count($key[1])):exit(http_response_code(404)));
+            foreach ($key[1] as $id => $val) {
+                $Str[$id][] = $val;
+                $Str[$id][] = getSrt(mt_rand(3,5));
+                $Str[$id][] = trim($tit[$rand_title[$id]]);
+            }
+            $link['url'] = $Str;
+        }
+        return $link;
+    }
+    return $link;
+}
+
+function getSrt($len = 3) {
+    $strArr = range('a', 'z');
+    $keyArr = array_rand($strArr, $len);
+    foreach ($keyArr as $val) {
+        $randStr[] = trim($strArr[$val]);
+    }
+    return implode($randStr);
 }
 
 function getKeyId($dom, $key) {
