@@ -167,7 +167,6 @@ function getTitle($dom, $link) {
             $links['links'] = $json;
             $links['keyid'] = $keyid;
             $links['title'] = implode($hexSrt);
-            file_put_contents($links['file'].$links['id'].'.title.json', serialize($links), LOCK_EX);
         } else {
             $_array = mb_str_split(trim($key[mt_rand(0,count($key)-1)]));
             foreach($_array as $keysi){
@@ -176,7 +175,6 @@ function getTitle($dom, $link) {
             $links['links'] = $json;
             $links['keyid'] = mt_rand(0,count($key)-1);
             $links['title'] = !empty($links['titles']) ? $links['titles'] : implode($hexSrt);
-            file_put_contents(str_replace('news'.DIRECTORY_SEPARATOR, '', $links['file']).$links['id'].'.title.json', serialize($links), LOCK_EX);
         }
     }
     return $links;
