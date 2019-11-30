@@ -283,7 +283,7 @@ function getLinks($dom) {
             }
 	}
     }
-    return array('time' => time()-mt_rand(120,600), 'list' => (empty($matchList[0]) ? 'news' : $matchList[0]), 'id' => $id, 'file' => $listIdDir);
+    return array('domain' => $dom[2], 'time' => time()-mt_rand(120,600), 'list' => (empty($matchList[0]) ? 'news' : $matchList[0]), 'id' => $id, 'file' => $listIdDir);
 }
 
 function getKeyId($dom, $key) {
