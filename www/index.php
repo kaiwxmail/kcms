@@ -127,12 +127,8 @@ function getDomain($dom) {
         $domDirs = __DIR__.DIRECTORY_SEPARATOR.'data'.DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.trim($domain[0]).DIRECTORY_SEPARATOR;
         $dirName = substr(getHost(), 0, strrpos(getHost(), $domain[0]));
         $dirs = $domDirs.str_replace('.', DIRECTORY_SEPARATOR, $dirName);
-        if(!is_dir($dirs)) {
-            mkdirs($dirs);
-            return array($domDirs, $dirs);
-        } else {
-            return array($domDirs, $dirs);
-        }
+        if(!is_dir($dirs)) {mkdirs($dirs);}
+        return array($domDirs, $dirs, $domain[0]);
     }else{
         return exit(http_response_code(404));
     }
